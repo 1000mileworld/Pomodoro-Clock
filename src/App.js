@@ -6,6 +6,9 @@ import { faPlay, faPause, faSync } from '@fortawesome/free-solid-svg-icons';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+//css
+document.body.style.backgroundColor = "hsl(60, 100%, 90%)";
+
 let countdown;
 
 function displayTimeLeft(seconds) {
