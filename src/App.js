@@ -6,6 +6,24 @@ import { faPlay, faPause, faSync } from '@fortawesome/free-solid-svg-icons';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+
+const initialState = {
+  break: 5,
+  session: 25,
+  timeLeft: '25:00',
+  isPaused: true,
+  type: 'Session'
+};
+
+function reducer(state = initialState, action){
+  console.log('reducer',state,action);
+}
+
+const store = createStore(reducer);
+
+
 //css
 document.body.style.backgroundColor = "hsl(60, 100%, 90%)";
 
@@ -150,37 +168,39 @@ class App extends React.Component{
   }
   render(){
     return(
-      <div className="container-fluid">
-        <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet"/>
-        <link href="https://fonts.googleapis.com/css?family=Zhi+Mang+Xing&display=swap" rel="stylesheet"/>
-        <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet"/>
-        <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet"/>
+      <Provider store={store}>
+        <div className="container-fluid">
+          <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet"/>
+          <link href="https://fonts.googleapis.com/css?family=Zhi+Mang+Xing&display=swap" rel="stylesheet"/>
+          <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet"/>
+          <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet"/>
 
-        <h1>Pomodoro Clock</h1>
-        <div className="row">
-          <h2 id='break-label' className="col">Break Length</h2>
-          <h2 id='session-label' className="col">Session Length</h2>
-        </div>
-        <div className="row">
-          <div className="col">
-          <div><button id="break-decrement" onClick={this.breakDec}>-</button>
-            <div id="break-length">{this.state.break}</div>
-          <button id="break-increment" onClick={this.breakInc}>+</button></div>           
+          <h1>Pomodoro Clock</h1>
+          <div className="row">
+            <h2 id='break-label' className="col">Break Length</h2>
+            <h2 id='session-label' className="col">Session Length</h2>
           </div>
-          <div className="col">
-          <div><button id="session-decrement" onClick={this.sessionDec}>-</button>
-            <div id="session-length">{this.state.session}</div>
-          <button id="session-increment" onClick={this.sessionInc}>+</button></div>           
+          <div className="row">
+            <div className="col">
+            <div><button id="break-decrement" onClick={this.breakDec}>-</button>
+              <div id="break-length">{this.state.break}</div>
+            <button id="break-increment" onClick={this.breakInc}>+</button></div>           
+            </div>
+            <div className="col">
+            <div><button id="session-decrement" onClick={this.sessionDec}>-</button>
+              <div id="session-length">{this.state.session}</div>
+            <button id="session-increment" onClick={this.sessionInc}>+</button></div>           
+            </div>
           </div>
+          <h2 id="timer-label">{this.state.type}</h2>
+          <div id="time-left">{this.state.timeLeft}</div>
+          <button id="start_stop" onClick={this.controlTimer}><FontAwesomeIcon className="fa-2x" icon={faPlay}/>
+              <FontAwesomeIcon className="fa-2x" icon={faPause}/></button>
+          <button id="reset" onClick={this.reset}><FontAwesomeIcon className="fa-2x" icon={faSync}/></button>
+          <audio id="beep" src="https://goo.gl/65cBl1"></audio>
+          <p id="footer">Designed and coded by Joe Liang.</p>
         </div>
-        <h2 id="timer-label">{this.state.type}</h2>
-        <div id="time-left">{this.state.timeLeft}</div>
-        <button id="start_stop" onClick={this.controlTimer}><FontAwesomeIcon className="fa-2x" icon={faPlay}/>
-            <FontAwesomeIcon className="fa-2x" icon={faPause}/></button>
-        <button id="reset" onClick={this.reset}><FontAwesomeIcon className="fa-2x" icon={faSync}/></button>
-        <audio id="beep" src="https://goo.gl/65cBl1"></audio>
-        <p id="footer">Designed and coded by Joe Liang.</p>
-      </div>
+      </Provider>
     )
   }
 }
