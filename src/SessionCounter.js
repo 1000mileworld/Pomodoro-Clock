@@ -6,14 +6,14 @@ import store from './store';
 class SessionCounter extends React.Component{
     increment = () => {
         const state = store.getState();
-        if(state.SessionReducer.session<60 && state.OtherReducer.isPaused){
+        if(state.SessionReducer.session<60 && state.DisplayReducer.isPaused){
             this.props.inc_session();
         }
     }
 
     decrement = () => {
         const state = store.getState();
-        if(state.SessionReducer.session>1 && state.OtherReducer.isPaused){
+        if(state.SessionReducer.session>1 && state.DisplayReducer.isPaused){
             this.props.dec_session();
         }
     }

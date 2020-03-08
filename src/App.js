@@ -10,6 +10,7 @@ import {Provider} from 'react-redux';
 
 import store from './store';
 import SessionCounter from './SessionCounter.js';
+import BreakCounter from './BreakCounter';
 
 
 //css
@@ -170,9 +171,7 @@ class App extends React.Component{
           </div>
           <div className="row">
             <div className="col">
-            <div><button id="break-decrement" onClick={this.breakDec}>-</button>
-              <div id="break-length">{this.state.break}</div>
-            <button id="break-increment" onClick={this.breakInc}>+</button></div>           
+            <div><BreakCounter/></div>           
             </div>
             <div className="col">
             <div><SessionCounter/></div>           

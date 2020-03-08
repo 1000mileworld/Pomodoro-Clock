@@ -39,7 +39,7 @@ function BreakReducer(state = {break: initialState.break}, action){
     }
 }
 
-function OtherReducer(state = {timeLeft: initialState.timeLeft, isPaused: initialState.isPaused, type: initialState.type}, action){
+function DisplayReducer(state = {timeLeft: initialState.timeLeft, isPaused: initialState.isPaused, type: initialState.type}, action){
     switch(action.type){
         default:
             return state;
@@ -49,7 +49,7 @@ function OtherReducer(state = {timeLeft: initialState.timeLeft, isPaused: initia
 const rootReducer = combineReducers({
     SessionReducer,
     BreakReducer,
-    OtherReducer
+    DisplayReducer
 });
 
   export default rootReducer;
