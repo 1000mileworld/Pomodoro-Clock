@@ -1,6 +1,6 @@
 import React from 'react';
 
-class breakCounter extends React.Component{
+class BreakCounter extends React.Component{
 
     render(){
         return(
@@ -13,4 +13,4 @@ class breakCounter extends React.Component{
     }
 }
 
-export default breakCounter;
+export default BreakCounter;

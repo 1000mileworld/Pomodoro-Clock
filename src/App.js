@@ -6,22 +6,10 @@ import { faPlay, faPause, faSync } from '@fortawesome/free-solid-svg-icons';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
-const initialState = {
-  break: 5,
-  session: 25,
-  timeLeft: '25:00',
-  isPaused: true,
-  type: 'Session'
-};
-
-function reducer(state = initialState, action){
-  console.log('reducer',state,action);
-}
-
-const store = createStore(reducer);
+import store from './store';
+import SessionCounter from './SessionCounter.js';
 
 
 //css
@@ -187,9 +175,7 @@ class App extends React.Component{
             <button id="break-increment" onClick={this.breakInc}>+</button></div>           
             </div>
             <div className="col">
-            <div><button id="session-decrement" onClick={this.sessionDec}>-</button>
-              <div id="session-length">{this.state.session}</div>
-            <button id="session-increment" onClick={this.sessionInc}>+</button></div>           
+            <div><SessionCounter/></div>           
             </div>
           </div>
           <h2 id="timer-label">{this.state.type}</h2>
