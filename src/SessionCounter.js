@@ -6,9 +6,10 @@ import store from './store';
 class SessionCounter extends React.Component{
     increment = () => {
         const state = store.getState();
+        //console.log(state.SessionReducer.timeLeft)
         if(state.SessionReducer.session<60 && state.DisplayReducer.isPaused){
             this.props.inc_session();
-            //this.props.update_time();
+            this.props.update_time();
         }
     }
 

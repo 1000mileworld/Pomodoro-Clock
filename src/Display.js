@@ -15,7 +15,7 @@ class Display extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            time: convertNum(this.props.sessionTime)
+            time: this.props.sessionTime
         }
     }
     reset(){
@@ -84,7 +84,7 @@ class Display extends React.Component{
         return(
             <div>
                 <h2 id="timer-label">{this.props.type}</h2>
-                <div id="time-left">{this.state.time}</div>
+                <div id="time-left">{this.props.sessionTime}</div>
                 <button id="start_stop" onClick={this.controlTimer}>
                     <FontAwesomeIcon className="fa-2x" icon={faPlay}/>
                     <FontAwesomeIcon className="fa-2x" icon={faPause}/>
@@ -97,10 +97,11 @@ class Display extends React.Component{
 }
 
 function mapStateToProps(state){
+    console.log(state.SessionReducer.timeLeft)
     return{
         isPaused: state.DisplayReducer.isPaused,
         type: state.DisplayReducer.type,
-        sessionTime: state.SessionReducer.session
+        sessionTime: state.SessionReducer.timeLeft
     };
 }
 
