@@ -1,9 +1,6 @@
 import React from 'react';
 import './App.scss';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause, faSync } from '@fortawesome/free-solid-svg-icons';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {Provider} from 'react-redux';
@@ -11,25 +8,27 @@ import {Provider} from 'react-redux';
 import store from './store';
 import SessionCounter from './SessionCounter.js';
 import BreakCounter from './BreakCounter';
+import Display from './Display';
 
 
 //css
 document.body.style.backgroundColor = "hsl(60, 100%, 90%)";
 
-let countdown;
+// let countdown;
 
-function displayTimeLeft(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const remainderSeconds = seconds % 60;
-  const display = `${minutes < 10 ? '0' : '' }${minutes}:${remainderSeconds < 10 ? '0' : '' }${remainderSeconds}`;
-  return display;
-}
-function convertNum(num){
-  const prefix = num < 10 ? '0' : '';
-  return prefix + num + ':00';
-}
+// function displayTimeLeft(seconds) {
+//   const minutes = Math.floor(seconds / 60);
+//   const remainderSeconds = seconds % 60;
+//   const display = `${minutes < 10 ? '0' : '' }${minutes}:${remainderSeconds < 10 ? '0' : '' }${remainderSeconds}`;
+//   return display;
+// }
+// function convertNum(num){
+//   const prefix = num < 10 ? '0' : '';
+//   return prefix + num + ':00';
+// }
 
 class App extends React.Component{
+  /*
   constructor(props){
     super(props)
     this.state={
@@ -155,6 +154,7 @@ class App extends React.Component{
   componentDidUpdate() {
     this.handleChange();
   }
+  */
   render(){
     return(
       <Provider store={store}>
@@ -177,12 +177,7 @@ class App extends React.Component{
             <div><SessionCounter/></div>           
             </div>
           </div>
-          <h2 id="timer-label">{this.state.type}</h2>
-          <div id="time-left">{this.state.timeLeft}</div>
-          <button id="start_stop" onClick={this.controlTimer}><FontAwesomeIcon className="fa-2x" icon={faPlay}/>
-              <FontAwesomeIcon className="fa-2x" icon={faPause}/></button>
-          <button id="reset" onClick={this.reset}><FontAwesomeIcon className="fa-2x" icon={faSync}/></button>
-          <audio id="beep" src="https://goo.gl/65cBl1"></audio>
+          <Display/>
           <p id="footer">Designed and coded by Joe Liang.</p>
         </div>
       </Provider>
