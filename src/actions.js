@@ -26,7 +26,10 @@ export function dec_session(){
 export const inc_break = () => ({type: INC_BREAK});
 export const dec_break = () => ({type: DEC_BREAK});
 
-export const update_time = () => ({type: UPDATE_TIME});
+export const update_time = (time) => ({
+    type: UPDATE_TIME,
+    time
+});
 export const set_pause = () => ({type: SET_PAUSE});
 export const set_type = (label) => ({
     type: SET_TYPE,

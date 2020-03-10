@@ -12,13 +12,13 @@ let countdown;
 //const state = store.getState();
 
 class Display extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            time: this.props.sessionTime
-        }
-    }
-    reset(){
+    // constructor(props){
+    //     super(props);
+    //     this.state = {
+    //         time: this.props.sessionTime
+    //     }
+    // }
+    reset = () => {
         clearInterval(countdown);
         this.props.reset_controls();
         this.props.reset_break();
@@ -27,7 +27,7 @@ class Display extends React.Component{
         audio.pause();
         audio.currentTime = 0;
     }
-    controlTimer(){
+    controlTimer = () => {
         this.props.set_pause();
         if(!this.props.isPaused){
             this.runTimer();
@@ -35,11 +35,11 @@ class Display extends React.Component{
             clearInterval(countdown);
         }
     }
-    runTimer(){
+    runTimer = () => {
         // clear any existing timers
         clearInterval(countdown);
-
-        let secondsLeft = parseInt(this.state.time.split(":")[0])*60+parseInt(this.state.time.split(":")[1]);
+        console.log("run timer")
+        let secondsLeft = parseInt(this.props.timeStr.split(":")[0])*60+parseInt(this.props.timeStr.split(":")[1]);
         
         countdown = setInterval(() => {
             secondsLeft = secondsLeft - 1;
@@ -49,42 +49,44 @@ class Display extends React.Component{
                 return;
             }
             // display it
-            this.setState({
-                time: displayTimeLeft(secondsLeft)
-            })
+            // this.setState({
+            //     time: displayTimeLeft(secondsLeft)
+            // })
+            console.log(this.props.timeStr)
+            this.props.timeStr = displayTimeLeft(secondsLeft); //cannot assign to read only prop!
         }, 1000);
     
     }
-    handleChange(){
-        if(this.state.time==='00:00'){
-            const audio = document.getElementById('beep');
-            audio.play();
+    // handleChange = () => {
+    //     if(this.props.timeStr==='00:00'){
+    //         const audio = document.getElementById('beep');
+    //         audio.play();
             
-            setTimeout(()=>{ //need to delay 1 second to pass test
-                const state = store.getState();
-                if(this.props.type==='Session'){ 
-                    this.props.set_type('Break');
-                    this.setState(() => ({
-                        time: convertNum(state.BreakReducer.break)
-                    }), () => {this.runTimer()});
-                }else{
-                    this.props.set_type('Session')
-                    this.setState(state => ({
-                        time: convertNum(state.SessionReducer.session)
-                    }), () => {this.runTimer()});
-                }
-            }, 1000)
-        }
-    }
-    componentDidUpdate() {
-        this.handleChange();
-    }
+    //         setTimeout(()=>{ //need to delay 1 second to pass test
+    //             const state = store.getState();
+    //             if(this.props.type==='Session'){ 
+    //                 this.props.set_type('Break');
+    //                 this.setState(() => ({
+    //                     time: convertNum(state.BreakReducer.break)
+    //                 }), () => {this.runTimer()});
+    //             }else{
+    //                 this.props.set_type('Session')
+    //                 this.setState(state => ({
+    //                     time: convertNum(state.SessionReducer.session)
+    //                 }), () => {this.runTimer()});
+    //             }
+    //         }, 1000)
+    //     }
+    // }
+    // componentDidUpdate() {
+    //     this.handleChange();
+    // }
 
     render(){
         return(
             <div>
                 <h2 id="timer-label">{this.props.type}</h2>
-                <div id="time-left">{this.props.sessionTime}</div>
+                <div id="time-left">{this.props.timeStr}</div>
                 <button id="start_stop" onClick={this.controlTimer}>
                     <FontAwesomeIcon className="fa-2x" icon={faPlay}/>
                     <FontAwesomeIcon className="fa-2x" icon={faPause}/>
@@ -97,11 +99,12 @@ class Display extends React.Component{
 }
 
 function mapStateToProps(state){
-    console.log(state.SessionReducer.timeLeft)
+    //console.log(state.SessionReducer.timeLeft)
     return{
         isPaused: state.DisplayReducer.isPaused,
         type: state.DisplayReducer.type,
-        sessionTime: state.SessionReducer.timeLeft
+        sessionTime: state.SessionReducer.session,
+        timeStr: state.SessionReducer.timeLeft
     };
 }
 

@@ -26,12 +26,12 @@ function SessionReducer(state = {session: initialState.session, timeLeft: initia
         case 'UPDATE_TIME':
             return{
                 session: state.session,
-                timeLeft: convertNum(state.session)
+                timeLeft: convertNum(action.time)
             }
         case 'RESET_SESSION':
             return{
                 session: initialState.session,
-                timeLeft: state.timeLeft
+                timeLeft: startTime
             }
         default:
             return state;

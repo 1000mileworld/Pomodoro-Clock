@@ -9,7 +9,7 @@ class SessionCounter extends React.Component{
         //console.log(state.SessionReducer.timeLeft)
         if(state.SessionReducer.session<60 && state.DisplayReducer.isPaused){
             this.props.inc_session();
-            this.props.update_time();
+            this.props.update_time(this.props.session);
         }
     }
 
@@ -17,7 +17,7 @@ class SessionCounter extends React.Component{
         const state = store.getState();
         if(state.SessionReducer.session>1 && state.DisplayReducer.isPaused){
             this.props.dec_session();
-            this.props.update_time();
+            this.props.update_time(this.props.session);
         }
     }
 
@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch) => {
     return{
        inc_session: () => {dispatch(inc_session())},
        dec_session: () => {dispatch(dec_session())},
-       update_time: () => {dispatch(update_time())}
+       update_time: (time) => {dispatch(update_time(time))}
     }
 };
 
