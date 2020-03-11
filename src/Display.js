@@ -1,5 +1,5 @@
 import React from 'react';
-import {set_pause, set_type, reset_controls, reset_break, reset_session, reset_timer, update_counter} from './actions';
+import {set_pause, set_type, reset_controls, reset_break, reset_session, reset_timer, set_time, update_counter} from './actions';
 import {connect} from 'react-redux';
 import store from './store';
 
@@ -38,7 +38,21 @@ class Display extends React.Component{
     }
     runTimer = () => {
         // clear any existing timers
-        clearInterval(countdown);
+        clearInterval(countdown); //possibly clearing the break timer before it's supposed to
+        /*
+        00:02
+        00:01
+        00:00
+        changed to break
+        start timer upon changing type
+        finished timer
+        changed to session
+        start timer upon changing type
+        finished timer
+        00:59
+        00:58
+        00:57
+        */
         let secondsLeft = parseInt(this.props.timeStr.split(":")[0])*60+parseInt(this.props.timeStr.split(":")[1]);
         
         countdown = setInterval(() => {
@@ -53,33 +67,39 @@ class Display extends React.Component{
             //     time: displayTimeLeft(secondsLeft)
             // })
             this.props.update_counter(displayTimeLeft(secondsLeft)); //note: cannot assign to prop as it's read only
+            console.log(this.props.timeStr)
         }, 1000);
-    
+        console.log("finished timer")
     }
-    // handleChange = () => {
-    //     if(this.props.timeStr==='00:00'){
-    //         const audio = document.getElementById('beep');
-    //         audio.play();
+    handleChange = () => {
+        if(this.props.timeStr==='00:00'){
+            const audio = document.getElementById('beep');
+            audio.play();
             
-    //         setTimeout(()=>{ //need to delay 1 second to pass test
-    //             const state = store.getState();
-    //             if(this.props.type==='Session'){ 
-    //                 this.props.set_type('Break');
-    //                 this.setState(() => ({
-    //                     time: convertNum(state.BreakReducer.break)
-    //                 }), () => {this.runTimer()});
-    //             }else{
-    //                 this.props.set_type('Session')
-    //                 this.setState(state => ({
-    //                     time: convertNum(state.SessionReducer.session)
-    //                 }), () => {this.runTimer()});
-    //             }
-    //         }, 1000)
-    //     }
-    // }
-    // componentDidUpdate() {
-    //     this.handleChange();
-    // }
+            setTimeout(()=>{ //need to delay 1 second to pass test
+                if(this.props.type==='Session'){ 
+                    console.log("changed to break")
+                    this.props.set_type('Break');
+                    this.props.set_time(this.props.breakTime);
+                    // this.setState(() => ({
+                    //     time: convertNum(state.BreakReducer.break)
+                    // }), () => {this.runTimer()});
+                }else{
+                    console.log("changed to session")
+                    this.props.set_type('Session')
+                    this.props.set_time(this.props.sessionTime);
+                    // this.setState(state => ({
+                    //     time: convertNum(state.SessionReducer.session)
+                    // }), () => {this.runTimer()});
+                }
+                console.log("start timer upon changing type")
+                this.runTimer();
+            }, 1000)
+        }
+    }
+    componentDidUpdate() {
+        this.handleChange();
+    }
 
     render(){
         return(
@@ -115,6 +135,7 @@ const mapDispatchToProps = (dispatch) => {
         reset_break: () => {dispatch(reset_break())},
         reset_session: () => {dispatch(reset_session())},
         reset_timer: () => {dispatch(reset_timer())},
+        set_time: (time) => {dispatch(set_time(time))},
         update_counter: (str) => {dispatch(update_counter(str))}
     }
 };
