@@ -1,5 +1,5 @@
 import React from 'react';
-import {set_pause, set_type, reset_controls, reset_break, reset_session, update_counter} from './actions';
+import {set_pause, set_type, reset_controls, reset_break, reset_session, reset_timer, update_counter} from './actions';
 import {connect} from 'react-redux';
 import store from './store';
 
@@ -23,6 +23,7 @@ class Display extends React.Component{
         this.props.reset_controls();
         this.props.reset_break();
         this.props.reset_session();
+        this.props.reset_timer();
         const audio = document.getElementById('beep');
         audio.pause();
         audio.currentTime = 0;
@@ -97,13 +98,12 @@ class Display extends React.Component{
 }
 
 function mapStateToProps(state){
-    //console.log(state.SessionReducer.timeLeft)
     return{
         isPaused: state.DisplayReducer.isPaused,
         type: state.DisplayReducer.type,
         sessionTime: state.SessionReducer.session,
         breakTime: state.BreakReducer.break,
-        timeStr: state.SessionReducer.timeLeft
+        timeStr: state.TimerReducer.timeLeft
     };
 }
 
@@ -114,6 +114,7 @@ const mapDispatchToProps = (dispatch) => {
         reset_controls: () => {dispatch(reset_controls())},
         reset_break: () => {dispatch(reset_break())},
         reset_session: () => {dispatch(reset_session())},
+        reset_timer: () => {dispatch(reset_timer())},
         update_counter: (str) => {dispatch(update_counter(str))}
     }
 };
