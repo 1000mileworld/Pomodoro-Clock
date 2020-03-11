@@ -1,5 +1,6 @@
 import React from 'react';
-import {inc_session, dec_session, update_time} from './actions';
+import {inc_session, dec_session, set_session} from './actions';
+import {displayTimeLeft, convertNum} from './functions';
 import {connect} from 'react-redux';
 import store from './store';
 
@@ -9,7 +10,7 @@ class SessionCounter extends React.Component{
         //console.log(state.SessionReducer.timeLeft)
         if(state.SessionReducer.session<60 && state.DisplayReducer.isPaused){
             this.props.inc_session();
-            this.props.update_time(this.props.session);
+            this.props.set_session(this.props.session+1);
         }
     }
 
@@ -17,7 +18,7 @@ class SessionCounter extends React.Component{
         const state = store.getState();
         if(state.SessionReducer.session>1 && state.DisplayReducer.isPaused){
             this.props.dec_session();
-            this.props.update_time(this.props.session);
+            this.props.set_session(this.props.session-1);
         }
     }
 
@@ -42,7 +43,7 @@ const mapDispatchToProps = (dispatch) => {
     return{
        inc_session: () => {dispatch(inc_session())},
        dec_session: () => {dispatch(dec_session())},
-       update_time: (time) => {dispatch(update_time(time))}
+       set_session: (time) => {dispatch(set_session(time))}
     }
 };
 

@@ -9,4 +9,3 @@ export function convertNum(num){
     const prefix = num < 10 ? '0' : '';
     return prefix + num + ':00';
 }
-

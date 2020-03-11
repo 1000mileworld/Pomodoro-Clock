@@ -1,5 +1,5 @@
 import React from 'react';
-import {set_pause, set_type, reset_controls, reset_break, reset_session} from './actions';
+import {set_pause, set_type, reset_controls, reset_break, reset_session, update_counter} from './actions';
 import {connect} from 'react-redux';
 import store from './store';
 
@@ -28,17 +28,16 @@ class Display extends React.Component{
         audio.currentTime = 0;
     }
     controlTimer = () => {
-        this.props.set_pause();
-        if(!this.props.isPaused){
+        if(this.props.isPaused){ //means was paused, now run timer
             this.runTimer();
         }else{
             clearInterval(countdown);
         }
+        this.props.set_pause(); //statement placement doesn't matter, prop needs time to update so can't use it immediately after dispatch
     }
     runTimer = () => {
         // clear any existing timers
         clearInterval(countdown);
-        console.log("run timer")
         let secondsLeft = parseInt(this.props.timeStr.split(":")[0])*60+parseInt(this.props.timeStr.split(":")[1]);
         
         countdown = setInterval(() => {
@@ -52,8 +51,7 @@ class Display extends React.Component{
             // this.setState({
             //     time: displayTimeLeft(secondsLeft)
             // })
-            console.log(this.props.timeStr)
-            this.props.timeStr = displayTimeLeft(secondsLeft); //cannot assign to read only prop!
+            this.props.update_counter(displayTimeLeft(secondsLeft)); //note: cannot assign to prop as it's read only
         }, 1000);
     
     }
@@ -104,6 +102,7 @@ function mapStateToProps(state){
         isPaused: state.DisplayReducer.isPaused,
         type: state.DisplayReducer.type,
         sessionTime: state.SessionReducer.session,
+        breakTime: state.BreakReducer.break,
         timeStr: state.SessionReducer.timeLeft
     };
 }
@@ -111,12 +110,11 @@ function mapStateToProps(state){
 const mapDispatchToProps = (dispatch) => {
     return{
         set_pause: () => {dispatch(set_pause())},
-        set_type: (label) => {
-           dispatch(set_type(label))
-        },
+        set_type: (label) => {dispatch(set_type(label))},
         reset_controls: () => {dispatch(reset_controls())},
         reset_break: () => {dispatch(reset_break())},
-        reset_session: () => {dispatch(reset_session())}
+        reset_session: () => {dispatch(reset_session())},
+        update_counter: (str) => {dispatch(update_counter(str))}
     }
 };
 

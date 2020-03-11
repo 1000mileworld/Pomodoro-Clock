@@ -3,7 +3,8 @@ export const DEC_SESSION = "DEC_SESSION";
 export const INC_BREAK = "INC_BREAK";
 export const DEC_BREAK = "DEC_BREAK";
 
-export const UPDATE_TIME = "UPDATE_TIME";
+export const SET_SESSION = "SET_SESSION";
+export const UPDATE_COUNTER = "UPDATE_COUNTER";
 export const SET_PAUSE = "SET_PAUSE";
 export const SET_TYPE = "SET_TYPE";
 export const RESET_CONTROLS = "RESET_CONTROLS";
@@ -26,10 +27,16 @@ export function dec_session(){
 export const inc_break = () => ({type: INC_BREAK});
 export const dec_break = () => ({type: DEC_BREAK});
 
-export const update_time = (time) => ({
-    type: UPDATE_TIME,
+export const set_session = (time) => ({
+    type: SET_SESSION,
     time
 });
+
+export const update_counter = (str) => ({
+    type: UPDATE_COUNTER,
+    str
+})
+
 export const set_pause = () => ({type: SET_PAUSE});
 export const set_type = (label) => ({
     type: SET_TYPE,

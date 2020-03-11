@@ -23,10 +23,15 @@ function SessionReducer(state = {session: initialState.session, timeLeft: initia
                 session: state.session-1,
                 timeLeft: state.timeLeft 
             }
-        case 'UPDATE_TIME':
+        case 'SET_SESSION':
             return{
                 session: state.session,
                 timeLeft: convertNum(action.time)
+            }
+        case 'UPDATE_COUNTER':
+            return{
+                session: state.session,
+                timeLeft: action.str
             }
         case 'RESET_SESSION':
             return{
@@ -78,6 +83,21 @@ function DisplayReducer(state = {isPaused: initialState.isPaused, type: initialS
             return state;
     }
 }
+
+// function TimerReducer(state = {timeLeft: initialState.timeLeft}, action){
+//     switch(action.type){
+//         case 'SET_SESSION':
+//             return{
+//                 timeLeft: convertNum(action.time)
+//             }
+//         case 'UPDATE_COUNTER':
+//             return{
+//                 timeLeft: action.str
+//             }
+//         default:
+//             return state;
+//     }
+// }
 
 const rootReducer = combineReducers({
     SessionReducer,
