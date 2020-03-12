@@ -54,11 +54,18 @@ class Display extends React.Component{
         00:57
         */
         let secondsLeft = parseInt(this.props.timeStr.split(":")[0])*60+parseInt(this.props.timeStr.split(":")[1]);
-        
+        console.log("time left before starting timer: "+secondsLeft+"s")
+
         countdown = setInterval(() => {
+
+            if(secondsLeft===0){
+                console.log("timer reached zero, hit inside setInterval()")
+            }
             secondsLeft = secondsLeft - 1;
+
             // check if we should stop it!
             if(secondsLeft < 0) {
+                console.log("stopped timer because it reached zero")
                 clearInterval(countdown);
                 return;
             }
@@ -71,12 +78,13 @@ class Display extends React.Component{
         }, 1000);
         console.log("finished timer")
     }
-    handleChange = () => {
+    handleChange = async () => {
         if(this.props.timeStr==='00:00'){
             const audio = document.getElementById('beep');
             audio.play();
             
-            setTimeout(()=>{ //need to delay 1 second to pass test
+            console.log("about to change type")
+            //setTimeout(()=>{ //need to delay 1 second to pass test
                 if(this.props.type==='Session'){ 
                     console.log("changed to break")
                     this.props.set_type('Break');
@@ -92,10 +100,15 @@ class Display extends React.Component{
                     //     time: convertNum(state.SessionReducer.session)
                     // }), () => {this.runTimer()});
                 }
+                await this.timeout(1000);
                 console.log("start timer upon changing type")
                 this.runTimer();
-            }, 1000)
+            //}, 1000)
+
         }
+    }
+    timeout  = (ms) => {
+        return new Promise(res => setTimeout(res,ms));
     }
     componentDidUpdate() {
         this.handleChange();
