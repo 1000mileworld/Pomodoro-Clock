@@ -1,6 +1,5 @@
 import React from 'react';
 import {inc_session, dec_session, set_time} from './actions';
-import {displayTimeLeft, convertNum} from './functions';
 import {connect} from 'react-redux';
 import store from './store';
 

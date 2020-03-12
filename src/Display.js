@@ -1,9 +1,8 @@
 import React from 'react';
 import {set_pause, set_type, reset_controls, reset_break, reset_session, reset_timer, set_time, update_counter} from './actions';
 import {connect} from 'react-redux';
-import store from './store';
 
-import {displayTimeLeft, convertNum} from './functions';
+import {displayTimeLeft} from './functions';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faSync } from '@fortawesome/free-solid-svg-icons';
@@ -12,12 +11,7 @@ let countdown;
 //const state = store.getState();
 
 class Display extends React.Component{
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //         time: this.props.sessionTime
-    //     }
-    // }
+
     reset = () => {
         clearInterval(countdown);
         this.props.reset_controls();
@@ -39,28 +33,15 @@ class Display extends React.Component{
     runTimer = () => {
         // clear any existing timers
         clearInterval(countdown); //possibly clearing the break timer before it's supposed to
-        /*
-        00:02
-        00:01
-        00:00
-        changed to break
-        start timer upon changing type
-        finished timer
-        changed to session
-        start timer upon changing type
-        finished timer
-        00:59
-        00:58
-        00:57
-        */
+ 
         let secondsLeft = parseInt(this.props.timeStr.split(":")[0])*60+parseInt(this.props.timeStr.split(":")[1]);
-        console.log("time left before starting timer: "+secondsLeft+"s")
+        //console.log("time left before starting timer: "+secondsLeft+"s")
 
         countdown = setInterval(() => {
 
-            if(secondsLeft===0){
-                console.log("timer reached zero, hit inside setInterval()")
-            }
+            // if(secondsLeft===0){
+            //     console.log("timer reached zero, hit inside setInterval()")
+            // }
             secondsLeft = secondsLeft - 1;
 
             // check if we should stop it!
@@ -69,45 +50,35 @@ class Display extends React.Component{
                 clearInterval(countdown);
                 return;
             }
-            // display it
-            // this.setState({
-            //     time: displayTimeLeft(secondsLeft)
-            // })
             this.props.update_counter(displayTimeLeft(secondsLeft)); //note: cannot assign to prop as it's read only
-            console.log(this.props.timeStr)
+            //console.log(this.props.timeStr)
         }, 1000);
-        console.log("finished timer")
+        //console.log("finished timer")
     }
     handleChange = async () => {
         if(this.props.timeStr==='00:00'){
             const audio = document.getElementById('beep');
             audio.play();
             
-            console.log("about to change type")
+            //console.log("about to change type")
             //setTimeout(()=>{ //need to delay 1 second to pass test
                 if(this.props.type==='Session'){ 
-                    console.log("changed to break")
+                    //console.log("changed to break")
                     this.props.set_type('Break');
                     this.props.set_time(this.props.breakTime);
-                    // this.setState(() => ({
-                    //     time: convertNum(state.BreakReducer.break)
-                    // }), () => {this.runTimer()});
                 }else{
-                    console.log("changed to session")
+                    //console.log("changed to session")
                     this.props.set_type('Session')
                     this.props.set_time(this.props.sessionTime);
-                    // this.setState(state => ({
-                    //     time: convertNum(state.SessionReducer.session)
-                    // }), () => {this.runTimer()});
                 }
-                await this.timeout(1000);
-                console.log("start timer upon changing type")
+                await this.timeout(100);
+                //console.log("start timer upon changing type")
                 this.runTimer();
             //}, 1000)
 
         }
     }
-    timeout  = (ms) => {
+    timeout = (ms) => {
         return new Promise(res => setTimeout(res,ms));
     }
     componentDidUpdate() {
