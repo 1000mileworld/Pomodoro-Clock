@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "fa7f323f79c79e2f1eeffa093e43c2cc",
+    "revision": "12de22d9451e669d8f5b2adbae809e88",
     "url": "/Pomodoro-Clock/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Pomodoro-Clock/static/css/2.de424728.chunk.css"
   },
   {
-    "revision": "1c287408c352d1050b6e",
-    "url": "/Pomodoro-Clock/static/css/main.12a7095e.chunk.css"
+    "revision": "73ac91716a575aff7b52",
+    "url": "/Pomodoro-Clock/static/css/main.11ed291e.chunk.css"
   },
   {
     "revision": "8f415fbb5ab02783c625",
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Pomodoro-Clock/static/js/2.cf3ee9c9.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1c287408c352d1050b6e",
-    "url": "/Pomodoro-Clock/static/js/main.4c6e0064.chunk.js"
+    "revision": "73ac91716a575aff7b52",
+    "url": "/Pomodoro-Clock/static/js/main.375f0b2a.chunk.js"
   },
   {
     "revision": "e9a5209b87860f0ede37",
