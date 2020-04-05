@@ -45,7 +45,7 @@ class Display extends React.Component{
 
             // check if we should stop it!
             if(secondsLeft < 0) {
-                console.log("stopped timer because it reached zero")
+                //console.log("stopped timer because it reached zero")
                 clearInterval(countdown);
                 return;
             }
@@ -94,7 +94,7 @@ class Display extends React.Component{
                     <FontAwesomeIcon className="fa-2x" icon={faPause}/>
                 </button>
                 <button id="reset" onClick={this.reset}><FontAwesomeIcon className="fa-2x" icon={faSync}/></button>
-                <audio id="beep" src="https://goo.gl/65cBl1"></audio>
+                <audio id="beep" src="https://1000mileworld.com/Portfolio/BeepSound.mp3"></audio>
           </div>
         );
     }
